@@ -1,0 +1,864 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--  CLIENTE CATALOGO -->
+    <script type="text/javascript" src="js/apiGateway-js-sdk/lib/axios/dist/axios.standalone.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk/lib/CryptoJS/rollups/sha256.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk/lib/CryptoJS/components/hmac.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk/lib/CryptoJS/components/enc-base64.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk/lib/url-template/url-template.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk/lib/apiGatewayCore/sigV4Client.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk/lib/apiGatewayCore/apiGatewayClient.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk/lib/apiGatewayCore/simpleHttpClient.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk/lib/apiGatewayCore/utils.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk/apigClient.js"></script>
+
+    <!--  CLIENTE EMPLEADOS -->
+    <script type="text/javascript" src="js/apiGateway-js-sdk-2/lib/axios/dist/axios.standalone.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-2/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-2/lib/CryptoJS/rollups/sha256.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-2/lib/CryptoJS/components/hmac.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-2/lib/CryptoJS/components/enc-base64.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-2/lib/url-template/url-template.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-2/lib/apiGatewayCore/sigV4Client.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-2/lib/apiGatewayCore/apiGatewayClient.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-2/lib/apiGatewayCore/simpleHttpClient.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-2/lib/apiGatewayCore/utils.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-2/apigClient.js"></script>
+
+
+    <!--  CLIENTE PUTTASK -->
+    <script type="text/javascript" src="js/apiGateway-js-sdk-3/lib/axios/dist/axios.standalone.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-3/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-3/lib/CryptoJS/rollups/sha256.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-3/lib/CryptoJS/components/hmac.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-3/lib/CryptoJS/components/enc-base64.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-3/lib/url-template/url-template.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-3/lib/apiGatewayCore/sigV4Client.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-3/lib/apiGatewayCore/apiGatewayClient.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-3/lib/apiGatewayCore/simpleHttpClient.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-3/lib/apiGatewayCore/utils.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-3/apigClient.js"></script>
+
+
+    <!--  CLIENTE OBTENER TAREA PARA EMPLEADO EN FECHA -->
+    <script type="text/javascript" src="js/apiGateway-js-sdk-4/lib/axios/dist/axios.standalone.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-4/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-4/lib/CryptoJS/rollups/sha256.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-4/lib/CryptoJS/components/hmac.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-4/lib/CryptoJS/components/enc-base64.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-4/lib/url-template/url-template.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-4/lib/apiGatewayCore/sigV4Client.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-4/lib/apiGatewayCore/apiGatewayClient.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-4/lib/apiGatewayCore/simpleHttpClient.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-4/lib/apiGatewayCore/utils.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-4/apigClient.js"></script>
+
+<!--  ALL APIS METHODS (1 api) -->
+    <script type="text/javascript" src="js/apiGateway-js-sdk-6/lib/axios/dist/axios.standalone.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-6/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-6/lib/CryptoJS/rollups/sha256.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-6/lib/CryptoJS/components/hmac.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-6/lib/CryptoJS/components/enc-base64.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-6/lib/url-template/url-template.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-6/lib/apiGatewayCore/sigV4Client.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-6/lib/apiGatewayCore/apiGatewayClient.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-6/lib/apiGatewayCore/simpleHttpClient.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-6/lib/apiGatewayCore/utils.js"></script>
+    <script type="text/javascript" src="js/apiGateway-js-sdk-6/apigClient.js"></script>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.49.0.min.js" type="text/javascript"></script>
+    <script src="js/config.js"></script>
+    <script src="js/functions.js"></script>
+
+    <!-- Font Awesome -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/upload.css" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <title>Saam Wanderlust - Upload</title>
+    <script type="text/javascript">
+
+      var newGeneratedUuid = uuidv4();
+      var sessionToken = "";
+    	var userId = "";
+      // Catalogue
+      var items = [];
+      // Employees
+      var employees = [];
+      var catalogue =[];
+      var taskForEmployee=[];
+
+      ValidateSession();
+
+      AWS.config.region = _config.cognito.region;
+      AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: _config.cognito.identityPoolId
+      });
+      AWS.config.credentials.get(function (err) {
+        if(err) {
+          console.log(err);
+        } else {
+          console.log("updated aws config with web identity federation:\n", AWS.config.credentials);
+          AWS.config.identityId = AWS.config.credentials.identityId;
+          console.log("identityId:", AWS.config.identityId);
+        }
+      });
+
+      function getCatalogue (){
+        //js/apiGateway-js-sdk/apigClient.js.
+
+
+        //  var apigClient = apigClientFactory.newClient();
+          var apigClient = apigClientFactory6.newClient();
+                  // cattasksGet
+          apigClient.cattasksGet({},null,{})
+          .then(function(response){
+            console.log("respuesta ok Items:" ,response.data.Items);
+            console.log("ITEMS:",JSON.stringify(response.data));
+            items = response.data.Items;
+            console.log("VAR ITEMS: " , items);
+            drawTable2(items);
+            // Add success callback code here.
+          }).catch( function(response){
+            // Add error callback code here.
+            console.log("respuesta con ERROR:");
+          });
+
+
+
+      }
+
+
+
+
+      function getEmployees () {
+          //var apigClient = apigClientFactory2.newClient();
+          var apigClient = apigClientFactory6.newClient();
+          console.log("apigClient es: ",apigClient);
+          var params = {
+            // This is where any modeled request parameters should be added.
+            // The key is the parameter name, as it is defined in the API in API Gateway.
+            Location: 'MEX2'
+          };
+
+          var additionalParams = {
+                queryParams: {
+                  Location: 'MEX2'
+                        }
+          }
+
+          apigClient.employeesGet(params,null,additionalParams)
+          .then(function(response){
+            console.log("respuesta ok Employees:" ,response.data.Items);
+            console.log("Employees:",JSON.stringify(response.data));
+
+            employees = response.data.Items;
+            console.log("VAR Employees: " , employees);
+            drawTable(employees);
+            // Add success callback code here.
+          }).catch( function(response){
+            // Add error callback code here.
+            console.log("respuesta con ERROR:");
+          });
+
+
+
+      }
+
+      function drawTable2(data) {
+          for (var i = 0; i < data.length; i++) {
+              drawRow2(data[i],i);
+          }
+      }
+
+      function drawTable(data) {
+          for (var i = 0; i < data.length; i++) {
+              drawRow(data[i],i);
+          }
+      }
+
+      function drawRow2(rowData,i) {
+          var row = $("<tr />")
+          $("#taskCatalogue").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
+          var optradioCat="radioCat"+i;
+          var nameRad="optradioCat";
+          //("<input type='radio' id='myRadio"+i+"'>")
+          row.append($("<label><input type=\"radio\" id='"+ i +"' name='"+ nameRad +"'></label>") );
+          row.append($("<td>" + rowData.task + "</td>"));
+          row.append($("<td>" + rowData.Description + "</td>"));
+//          row.append($("<td>" + taskForEmployee[0].TypeOfAssignedTask + "</td>"));
+          console.log("ROWDATA.LOGIN: ",rowData.task );
+//          console.log("ROWDATA.TypeOfAssignedTask: ", taskForEmployee[0].TypeOfAssignedTask);
+      }
+
+
+
+      function drawRow(rowData,i) {
+          var row = $("<tr />")
+          $("#personDataTable").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
+          //row.append($("<label><input type=\"ckeckbox\" id='checkbox' + 'i' name=\"optcheckbox\"></label>") );
+          //row.append($("<label> <input type=\"radio\" id='radio' + 'i' name=\"optradio\">") </label> ) );
+          var varStr= 'optradioEmp' ;
+          var concatStr= varStr.concat('',i);
+          console.log("VALOR DE CONCAT:",concatStr);
+          console.log("VALOR ROW DATA: ",rowData);
+          var radioB= 'radio';
+
+          //row.append($("<label><input type=radioB id='"+i+"'+ "name='"+concatStr+"' "> </label>") );
+          ////("<input type='radio' id='myRadio"+i+"'>")
+          row.append($("<label><input type=\"radio\" id='"+i+"' name='"+varStr+"'> </label>") );
+    //      row.append($("<label><input type=\"radio\" id= \"radioCat\" + 'i' name=\"concatStr\"> </label>") );
+          row.append($("<td>" + rowData.Login + "</td>"));
+          row.append($("<td>" + rowData.Name + "</td>"));
+          row.append($("<td>" + rowData.Location + "</td>"));
+          row.append($("<td>" + rowData.Turn + "</td>"));
+          row.append($("<td>" + rowData.TypeOfWork + "</td>"));
+          row.append($("<td>" + rowData.LoginManager + "</td>"));
+          row.append($("<td>" + arrayToString(rowData.Permissions) + "</td>"));
+
+          console.log("ROWDATA.LOGIN: ",rowData.Login );
+          var ret =[];
+          //resp=  getTaskForEmployeeParams('2019-02-28',rowData.Login,'D');
+
+          /* FUNCION DE GET TASK FOR EMPLOYEE PARAMS */
+
+
+          var apigClient = apigClientFactory6.newClient();
+          console.log("DRAW TABLE: apigClient for getTaskForEmployeeParams: ",apigClient);
+          var params = {
+            // This is where any modeled request parameters should be added.
+            // The key is the parameter name, as it is defined in the API in API Gateway.
+            DateOfTask: '2019-02-28',
+            LoginAssociate: rowData.Login,
+            Turn: 'N'
+          };
+
+          var additionalParams = {
+                queryParams: {
+                  DateOfTask: '2019-02-28',
+                  LoginAssociate: rowData.Login,
+                  Turn:'N'
+                  }
+          }
+
+          apigClient.employeetaskGet(params,null,additionalParams)
+          .then(function(response){
+            console.log("DIEGO: respuesta ok TASKS FOR EMPL:" ,response.data.Items);
+            console.log("DIEGO: TASK:",JSON.stringify(response.data));
+
+            taskForEmployee = response.data.Items;
+            console.log("VAR TASK: " + taskForEmployee + "/" + "RET: " + ret);
+            ret= response.data.Items;
+            //alert("DRAW ROW: VAR TASK: " + taskForEmployee.length + "/" + "RET: " + ret.length);
+            console.log("ARREGLO TRAEEEEE:",JSON.stringify(ret));
+            console.log("TYPE ASS TASK TRAEEEEE:",ret[0].TypeOfAssignedTask);
+            row.append($("<td>" + ret[0].TypeOfAssignedTask + "</td>"));
+
+            if (ret.length()>0){
+              console.log("RESP TASK FOR EMPLLLLLLLL: ",ret[0].TypeOfAssignedTask);
+              row.append($("<td>" + ret[0].TypeOfAssignedTask + "</td>"));
+            }
+            else{
+              console.log("Entra en else , length fue 0");
+              row.append($("<td>"+''+"</td>"));
+            }
+
+            // Add success callback code here.
+          }).catch( function(response){
+            // Add error callback code here.
+            console.log("respuesta con ERROR ... EMPL GET TASK...");
+            // Add new 11 mar 6:11pm,line below
+            //row.append($("<td>"+''+"</td>"));
+          });
+
+
+
+          /*TERMINA FUNC */
+
+
+
+
+
+
+          //console.log("TASSSK primer elem:", ret);
+          //console.log("RESP FROM TASK LENGTH: ", resp.length );
+
+          if (ret.length > 0) {
+            alert("ret.length mayor a 0");
+            console.log("RESP TASK FOR EMPLLLLLLLL: ",ret.TypeOfAssignedTask);
+          }
+//          row.append($("<td>" + taskForEmployee[0].TypeOfAssignedTask + "</td>"));
+
+//          console.log("ROWDATA.TypeOfAssignedTask: ", taskForEmployee[0].TypeOfAssignedTask);
+      }
+
+      function arrayToString(data){
+        str = "";
+        for (var i = 0; i < data.length; i++) {
+            str += data[i].Process + ", " + data[i].SubP +  ", " + data[i].Level + "//";
+        }
+        return str;
+      }
+
+
+      function getTaskForEmployee(){
+        //var apigClient = apigClientFactory4.newClient();
+        var apigClient = apigClientFactory6.newClient();
+        console.log("apigClient es: ",apigClient);
+        var params = {
+          // This is where any modeled request parameters should be added.
+          // The key is the parameter name, as it is defined in the API in API Gateway.
+          DateOfTask: '2019-02-28',
+          LoginAssociate: 'diegoli',
+          Turn: 'D'
+        };
+//employeetask?DateOfTask=2019-02-28&LoginAssociate=diegoli&Turn=D
+        var additionalParams = {
+              queryParams: {
+                DateOfTask: '2019-02-28',
+                LoginAssociate: 'diegoli',
+                Turn: 'D'
+              }
+        }
+        console.log("addParams:", additionalParams);
+
+        apigClient.employeetaskGet(params,null,additionalParams)
+        .then(function(response){
+          console.log("respuesta ok TASKS FOR EMPL:" ,response.data.Items);
+          console.log("TASK:",JSON.stringify(response.data));
+
+          taskForEmployee = response.data.Items;
+          console.log("VAR TASK Employee: " , taskForEmployee);
+
+          // Add success callback code here.
+        }).catch( function(response){
+          // Add error callback code here.
+          console.log("respuesta con ERROR:");
+        });
+
+
+      }
+
+
+      function getTaskForEmployeeParams(DateTask,LoginAsso,Tur){
+        //var apigClient = apigClientFactory4.newClient();
+        var ret=[];
+        var apigClient = apigClientFactory6.newClient();
+        console.log("apigClient for getTaskForEmployeeParams: ",apigClient);
+        var params = {
+          // This is where any modeled request parameters should be added.
+          // The key is the parameter name, as it is defined in the API in API Gateway.
+          DateOfTask: DateTask, //'2019-02-28',
+          LoginAssociate: LoginAsso ,//'diegoli',
+          Turn: Tur//'D'
+        };
+
+        var additionalParams = {
+              queryParams: {
+                DateOfTask: DateTask ,//'2019-02-28',
+                LoginAssociate: LoginAsso ,//'diegoli',
+                Turn:Tur//'D'
+                      }
+        }
+
+        apigClient.employeetaskGet(params,null,additionalParams)
+        .then(function(response){
+          console.log("DIEGO: respuesta ok TASKS FOR EMPL:" ,response.data.Items);
+          console.log("DIEGO: TASK:",JSON.stringify(response.data));
+
+          taskForEmployee = response.data.Items;
+          console.log("VAR TASK: " + taskForEmployee + "/" + "RET: " + ret);
+          ret= response.data.Items;
+          alert("VAR TASK: " + taskForEmployee.length + "/" + "RET: " + ret.length);
+          return ret;
+          // Add success callback code here.
+        }).catch( function(response){
+          // Add error callback code here.
+          console.log("respuesta con ERROR GET EMPL PARAMS ----");
+          return ret;
+        });
+        return ret;
+
+
+      }
+
+      function postEmployees (){
+        //  var apigClient = apigClientFactory3.newClient();
+        //alert("HACIENDO POST DATOS");
+        var apigClient = apigClientFactory6.newClient();
+          console.log("apigClient es: ",apigClient);
+          /*
+          var params = {
+            // This is where any modeled request parameters should be added.
+            // The key is the parameter name, as it is defined in the API in API Gateway.
+            Location: 'MEX2'
+          };*/
+
+          var body = {
+              // This is where you define the body of the request,
+              "Date": "2019-02-28",
+              "Login": "pij",
+              "FCId": "MEX2",
+              "LoginAM": "zajbert",
+              "Turn": "N",
+              "TypeTask": "Slam",
+              "TypeWork": "Back"
+          };
+
+      //    var additionalParams = {
+      //          queryParams: {
+      //            Location: 'MEX2'
+      //                  }
+      //    }
+
+/*          var additionalParams = {
+          // If there are any unmodeled query parameters or headers that must be
+          //   sent with the request, add them here.
+            headers: {
+
+              //Access-Control-Allow-Origin: 'http://saamwanderlust-example.s3-website-us-east-1.amazonaws.com',
+              Access-Control-Allow-Methods: 'POST',
+              Access-Control-Max-Age: '151200',
+              Access-Control-Allow-Headers:'x-requested-with,Content-Type'
+            }
+          }
+*/
+          console.log("BODY ES:", body);
+
+          apigClient.taskPost({},body,{})
+          .then(function(response){
+            console.log("respuesta ok Employees:" ,response.data.Items);
+            console.log("Employees:",JSON.stringify(response.data));
+            employees = response.data.Items;
+            console.log("VAR Employees: " , employees);
+            // Add success callback code here.
+          }).catch( function(response){
+            // Add error callback code here.
+            console.log("respuesta con ERROR:");
+          });
+
+
+
+      }
+
+
+      function postEmployees2 (){
+        //  var apigClient = apigClientFactory3.newClient();
+        //alert("HACIENDO POST DATOS");
+        console.log("ANTES ENTRAR A EVAL JQUERY");
+        // para cada checkbox "chequeado"
+        var body={};
+        var lastTask="";
+        var idEmpl;
+        var idCat;
+        $("input[type=radio]:checked").each(function(){
+            console.log("ENTRANDO AL METODO");
+            var radiosChk= $("input[type=radio]:checked");
+            console.log("IMPRIMIR RADIOS:",radiosChk);
+            console.log("This valor:" , $(this) );
+
+            idEmpl=radiosChk[0].id;
+            idCat=radiosChk[1].id;
+            console.log("ID Empl y ID CAT" , idEmpl +" " + idCat );
+
+            idEmpl=parseInt(idEmpl)+1;
+            idCat=parseInt(idCat)+1;
+            console.log("ID Empl y ID CAT + 1: " , idEmpl +" " + idCat );
+            // OBT LOGIN SELECCIONADO
+            //var login= personDataTable.rows[idEmpl].cells[0].value;
+
+            var login= $('#personDataTable tr').eq(idEmpl).find('td').eq(0);
+            //var tarea=taskCatalogue.rows[idCat].cells[0].value;
+            var tarea= $('#taskCatalogue tr').eq(idCat).find('td').eq(0);
+            console.log("Login Empl" , login);
+            console.log("tarea Empl" , tarea);
+
+
+            var lg = document.getElementById("personDataTable").rows[idEmpl].cells[0].innerText;
+            var fcI= document.getElementById("personDataTable").rows[idEmpl].cells[2].innerText;
+            var tur= document.getElementById("personDataTable").rows[idEmpl].cells[3].innerText;
+            var tw= document.getElementById("personDataTable").rows[idEmpl].cells[4].innerText;
+            var logiAM= document.getElementById("personDataTable").rows[idEmpl].cells[5].innerText;
+            var tsk= document.getElementById("taskCatalogue").rows[idCat].cells[0].innerText;
+
+            console.log("Login, fcI, tur, tw, logiAM, Tsk: " , lg + " " + fcI + " " + tur + " " + tw + " " +logiAM + " " +tsk);
+
+
+
+            body = {
+                // This is where you define the body of the request,
+                "Date": "2019-02-28",
+                "Login": lg,
+                "FCId": fcI,
+                "LoginAM": logiAM,
+                "Turn": tur,
+                "TypeTask": tsk,
+                "TypeWork": tw
+            };
+
+
+        });
+
+        var apigClient = apigClientFactory6.newClient();
+        console.log("apigClient es: ",apigClient);
+
+        console.log("BODY ES:", body);
+
+        apigClient.taskPost({},body,{})
+        .then(function(response){
+          console.log("respuesta ok Employees..." );
+          console.log("Employees:",JSON.stringify(response.data));
+          alert('EXITO EN CAMBIO!!!... ', JSON.stringify(response.data));
+          lastTask= JSON.stringify(body.TypeTask);
+          console.log("lastTask es:", lastTask);
+          // Reemplaza double quotes por empty string.
+          var strFin= lastTask.replace(/\"/g, "");
+          document.getElementById("personDataTable").rows[idEmpl].cells[7].innerText=strFin;
+          //employees = response.data.Items;
+          //console.log("VAR Employees: " , employees);
+          // Add success callback code here.
+        }).catch( function(response){
+          // Add error callback code here.
+          console.log("respuesta con ERROR:");
+          //alert("ERROR EN CAMBIO!!!: " + (JSON.stringify(response.data)));
+        });
+
+
+
+
+//        var apigClient = apigClientFactory6.newClient();
+//          console.log("apigClient es: ",apigClient);
+          /*
+          var params = {
+            // This is where any modeled request parameters should be added.
+            // The key is the parameter name, as it is defined in the API in API Gateway.
+            Location: 'MEX2'
+          };*/
+
+/*          var body = {
+              // This is where you define the body of the request,
+              "Date": "2019-02-28",
+              "Login": "pij",
+              "FCId": "MEX2",
+              "LoginAM": "zajbert",
+              "Turn": "N",
+              "TypeTask": "Slam",
+              "TypeWork": "Back"
+          };*/
+
+      //    var additionalParams = {
+      //          queryParams: {
+      //            Location: 'MEX2'
+      //                  }
+      //    }
+
+/*          var additionalParams = {
+          // If there are any unmodeled query parameters or headers that must be
+          //   sent with the request, add them here.
+            headers: {
+
+              //Access-Control-Allow-Origin: 'http://saamwanderlust-example.s3-website-us-east-1.amazonaws.com',
+              Access-Control-Allow-Methods: 'POST',
+              Access-Control-Max-Age: '151200',
+              Access-Control-Allow-Headers:'x-requested-with,Content-Type'
+            }
+          }
+*/
+/*          console.log("BODY ES:", body);
+
+          apigClient.taskPost({},body,{})
+          .then(function(response){
+            console.log("respuesta ok Employees:" ,response.data.Items);
+            console.log("Employees:",JSON.stringify(response.data));
+            employees = response.data.Items;
+            console.log("VAR Employees: " , employees);
+            // Add success callback code here.
+          }).catch( function(response){
+            // Add error callback code here.
+            console.log("respuesta con ERROR:");
+          });
+*/
+      }
+
+
+
+
+        function InsertPhoto(data, faceResult){
+
+
+          var dynamodb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
+          var ddbparams = {
+            Item: {
+              "userId": {
+                S: userId
+              },
+              "PhotoId": {
+                S: newGeneratedUuid
+              },
+              "url": {
+                S: data.Location
+              },
+              "key": {
+                S: data.key
+              },
+              "type": {
+                S: faceResult.type
+              },
+              "typename": {
+                S: faceResult.typeName
+              },
+              "timestamp": {
+                N: Date.now().toString()
+              }
+            },
+            ReturnConsumedCapacity: "TOTAL",
+            TableName: _config.dynamodb.tableName
+          };
+          console.log(JSON.stringify(ddbparams));
+          dynamodb.putItem(ddbparams, function(err, data) {
+            if (err) console.log(err, err.stack); // an error occurred
+            else {
+              //console.log(JSON.stringify(data));  // successful response
+              console.log(JSON.stringify("Foto insertada exitósamente..."));
+            }
+          });
+
+        }
+
+    function redirect (url) {
+      var ua        = navigator.userAgent.toLowerCase(),
+          isIE      = ua.indexOf('msie') !== -1,
+          version   = parseInt(ua.substr(4, 2), 10);
+
+      // Internet Explorer 8 and lower
+      if (isIE && version < 9) {
+          var link = document.createElement('a');
+          link.href = url;
+          document.body.appendChild(link);
+          link.click();
+      }
+
+      // All other browsers can use the standard window.location.href (they don't lose HTTP_REFERER like Internet Explorer 8 & lower does)
+      else {
+          window.location.href = url;
+      }
+    }
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onloadend = function (e) {
+                    $('#analyzing').show();
+                    $("#details").hide();
+                    $("#details").empty();
+
+                    var img = document.createElement("img");
+                    img.src = e.target.result;
+
+                    img.onload = function(i) {
+                        $('#picture').fadeTo( "fast" , 0.5)
+
+                        var canvas = document.createElement("canvas");
+                        var ctx = canvas.getContext("2d");
+                        ctx.drawImage(img, 0, 0);
+
+                        var MAX_WIDTH = 800;
+                        var MAX_HEIGHT = 600;
+                        var width = img.width;
+                        var height = img.height;
+
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        var dataUrl = canvas.toDataURL("image/jpeg", 0.8);
+
+                        $('#imgPhoto').attr('src', dataUrl);
+                        $('#imgPhoto').attr('hidden', false);
+
+
+
+                        var imageData = {
+                            CognitoId: AWS.config.credentials.identityId,
+                            Objects: []
+                        };
+
+
+                        var binImage = getBinary(dataUrl);
+
+                        var rekognition = new AWS.Rekognition();
+
+                        var params = {
+                            Image: {
+                                Bytes: binImage
+                            },
+                            MinConfidence: 70
+                        };
+
+                        var s3 = new AWS.S3({
+                          apiVersion: '2006-03-01',
+                          params: { Bucket: _config.s3.bucket }
+                        });
+                        newGeneratedUuid = uuidv4();
+                        console.log(Date.now());
+                        s3.upload({
+                          Key: _config.s3.uploadPath + userId + '/' + newGeneratedUuid + '.jpg',
+                          Body: binImage,
+                          ACL: 'public-read'
+                        }, function(err, data) {
+                          if (err) {
+                            return alert('There was an error uploading your photo: ', err.message);
+                          }
+                          else {
+                              console.log('La foto se subió exitósamente...');
+                              //console.log(data);
+                              // Reconocimiento de rostros
+                              var params = {
+                                  Image: {
+                                      Bytes: binImage
+                                  },
+                                  Attributes: ["ALL"]
+                              };
+                              rekognition.detectFaces(params, function (err, data2) {
+                                if (err) {
+                                  console.log(err, err.stack);
+                                }
+                                else {
+                                  try{
+                                    var details = data2.FaceDetails[0];
+                                    //console.log(data2.FaceDetails);
+                                    console.log("Personas en la foto: " + data2.FaceDetails.length);
+                                    var faceResult = {};
+                                    if( data2.FaceDetails.length > 1 ) {
+                                      faceResult.type = "group";
+                                      faceResult.typeName = "Fotos de Grupo";
+                                    }
+                                    else if( data2.FaceDetails.length == 1 ){
+                                      faceResult.type = "selfie";
+                                      faceResult.typeName = "Selfies";
+                                    }
+                                    else {
+                                      faceResult.type = "photo";
+                                      faceResult.typeName = "Mis fotos";
+                                    }
+                                    $('#picture').fadeTo( "fast" , 1.0)
+                                    $("#analyzing").hide();
+                                    $("#details").show();
+                                    $( "#details" ).html('');
+                                	  $( "#details" ).append("<div class=\"alert alert-success\" role=\"alert\">La foto se cargó correctamente en el album: "+faceResult.typeName+"</div>");
+                                    $("#iraAlbumes").show();
+                                    InsertPhoto(data, faceResult);
+                                    var personData = [];
+                                    imageData.Person = {};
+                                  }
+                                  catch(e){
+                                    console.log('Error:' + e);
+                                  }
+                                }
+                              }); // Termina reconocimeinto de rostros
+                          }
+                        });
+                    };
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("document").ready(function() {
+            $("#inpObject").on("change", function () {
+                readURL(this);
+            });
+            $("#iraAlbumes").hide();
+        });
+
+
+
+
+    </script>
+
+
+</head>
+<body ng-app="shoppingListApp" class="ng-scope" ng-controller="NewShoppingListController">
+    <center>
+        <br/>
+        <div id="buttons" style="width: 80%;">
+            <!--<input hidden type="file" id="inpObject" accept="image/*" capture>  -->
+            <input type="button" value="Obt Catalogo" onclick="getCatalogue()">
+          <!--  <input type="button" value="Obt Empleados" onclick="getEmployees()">-->
+    <!--        <input type="button" value="Post Empleados" onclick="postEmployees()"> -->
+            <input type="button" value="Get Empleados" onclick="getEmployees()">
+  <!--           <input type="button" value="Get task for employee" onclick="getTaskForEmployee()">-->
+
+            <input type="button" value="Redir Ver Dashboard" onclick= "redirect('http://saamwanderlust-example.s3-website-us-east-1.amazonaws.com/dashboard.html')" >
+            <table id="personDataTable">
+              <tr>
+                  <th>Selecc</th>
+                  <th>Login</th>
+                  <th>Nombre</th>
+                  <th>Ubicacion</th>
+                  <th>Turno</th>
+                  <th>Tipo Trabajo</th>
+                  <th>Login AM</th>
+                  <th>Permisos</th>
+                  <th>Ultima Tarea</th>
+              </tr>
+
+            </table>
+
+            <table id="taskCatalogue">
+              <tr>
+                  <th>Selecc</th>
+                  <th>Nombre Task</th>
+                  <th>Descripcion</th>
+
+              </tr>
+
+            </table>
+
+            <input type="button" value="Assign task for employee" onclick="postEmployees2()">
+
+            <!--
+            <div id="btnTakeObject">
+                <label class="cameraButton">
+                    <span><i class="fa fa-camera"></i>&nbsp;&nbsp;Tomar foto</span>
+                    <input hidden type="file" id="inpObject" accept="image/*" capture>
+                </label>
+            </div>
+          -->
+        </div>
+        <!--
+        <div id="picture" >
+            <br />
+            <img id="imgPhoto" src="#" class="photo" hidden  />
+            <br/>
+        </div>
+        <div id="analyzing" hidden ><div class="spinner"></div></div>
+        <div id="details"  class="details" hidden></div>
+
+        <br><br>
+        <div class="container" style="width:400px" id="iraAlbumes">
+          <a href="#" onclick="document.location.href='index.html'"><h2>Ir a mis álbumes</h2></a>
+        </div>
+          -->
+    </center>
+</body>
+</html>

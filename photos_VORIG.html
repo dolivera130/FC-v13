@@ -1,0 +1,137 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="js/config.js"></script>
+    <!-- optional: only if you use other AWS services -->
+<script src="js/aws-sdk.min.js"></script>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<style type="text/css">
+.gallery .caption { margin: 5px 0 15px; padding: 0 15px; }
+.gallery [class^="col-"] { padding: 0; }
+
+@media (min-width: 768px) {
+.gallery .row { margin: 0; }
+.gallery .caption { display: none; }
+}
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+<title>Saam Wanderlust - Album</title>
+</head>
+
+<body class="ng-scope">
+
+	<header>
+	    <div class="container">
+	         <h1 class="">Album</h1>
+	    </div>
+	</header>
+	<div class="container gallery" id="containerGalery">
+	</div>
+
+<br><br>
+<div class="container" style="width:400px">
+	<button type="button" class="btn btn-primary btn-lg" onclick="GoBack()">Regresar</button>
+</div>
+<br><br>
+
+<div style="text-align: center;">
+	<div class="row" style="width: 90%; margin: auto;" id="artistListPane">
+	</div>
+</div>
+
+<script>
+	console.log(_config.cognito.userPoolId);
+	//console.log("Cookie:" + document.cookie);
+	console.log("API:" + _config.api.invokeUrl);
+	var albumParam = document.location.href.substr(document.location.href.indexOf("?list=") + 6, document.location.href.length);
+	console.log(albumParam);
+
+	var sessionToken = "";
+	if(  _config.api.invokeUrl == '' && document.cookie.indexOf('wasession') != -1 ) {
+		if( document.cookie.indexOf('wasession') == 0 ) {
+			sessionToken = document.cookie.substr(document.cookie.indexOf('wasession')+10,document.cookie.indexOf('userid=')-12);
+			userId = document.cookie.substr(document.cookie.indexOf('userid=')+7,document.cookie.length);
+		}
+		else {
+			userId = document.cookie.substr(document.cookie.indexOf('userid=')+7,document.cookie.indexOf('wasession')-9);
+			sessionToken = document.cookie.substr(document.cookie.indexOf('wasession=')+10,document.cookie.length);
+		}
+		console.log("Token:" + sessionToken);
+		console.log("User Id:" + userId);
+		$( "#artistListPane" ).html('');
+		$( "#artistListPane" ).append("<div class=\"alert alert-success\" role=\"alert\">Token: " + sessionToken + "</div>");
+	}
+	console.log("Token:" + sessionToken);
+
+function GoBack(){
+	document.location.href="index.html";
+}
+function ListPhotos() {
+	var manifestUrl = _config.api.invokeUrl + '?uid=' + userId;
+	$.ajaxSetup({
+  	headers : {
+    	'Authorization' : sessionToken
+  	}
+	});
+	var ArtistGetJson = $.getJSON( manifestUrl, function() {
+    console.log( "Imprimiendo lista..." );
+  })
+  .done(function( data ) {
+		$( "#artistListPane" ).html("");
+		console.log(data.Items);
+		var categoryNow = "none";
+		$( "#containerGalery" ).html("");
+		for( var m = 0; m < data.Items.length; m++ ) {
+			if(data.Items[m].type == albumParam){
+				$( "#containerGalery" ).append("" +
+						"<div class=\"col-sm-4\">" +
+								"<img src=\"" + _config.s3.hostUrl + "/" + data.Items[m].key+"\" class=\"img-responsive\">" +
+						"</div>");
+			}
+
+		}
+  })
+	.fail(function() {
+	  $( "#artistListPane" ).html('');
+	  $( "#artistListPane" ).append("<div class=\"alert alert-danger\" role=\"alert\">Error: Para ver el listado de artistas debe iniciar sesión</div><p><a class=\"btn btn-success btn-lg\" href=\"login.html\" role=\"button\">Login</a></p>");
+	});
+}
+
+if( document.cookie.indexOf('wasession') != -1 ) {
+	if( document.cookie.indexOf('wasession') == 0 ) {
+		sessionToken = document.cookie.substr(document.cookie.indexOf('wasession')+10,document.cookie.indexOf('userid=')-12);
+		userId = document.cookie.substr(document.cookie.indexOf('userid=')+7,document.cookie.length);
+	}
+	else {
+		userId = document.cookie.substr(document.cookie.indexOf('userid=')+7,document.cookie.indexOf('wasession')-9);
+		sessionToken = document.cookie.substr(document.cookie.indexOf('wasession=')+10,document.cookie.length);
+	}
+	console.log("Token:" + sessionToken);
+	console.log("User Id:" + userId);
+}
+if(  _config.api.invokeUrl == '' ) {
+	$( "#artistListPane" ).html('');
+	if( sessionToken != '' ) {
+		$( "#artistListPane" ).append("<div class=\"alert alert-success\" role=\"alert\">Token: " + sessionToken + "</div>");
+	}
+	else {
+		$( "#artistListPane" ).append("<div class=\"alert alert-success\" role=\"alert\">El sitio estático se creó exitósamente, ahora es necesario crear la autenticación con Cognito User Pools</div>");
+	}
+	$( "#buttonUpload" ).hide();
+	console.log("No se encontró el API endpoint en el archivo config.js:");
+}
+else {
+	if( sessionToken != '' ) {
+		ListPhotos();
+	}
+	else {
+		document.location.href = "login.html";
+	}
+
+}
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,122 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="js/config.js"></script>
+    <!-- optional: only if you use other AWS services -->
+<script src="js/aws-sdk.min.js"></script>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<style type="text/css">
+.gallery .caption { margin: 5px 0 15px; padding: 0 15px; }
+.gallery [class^="col-"] { padding: 0; }
+
+@media (min-width: 768px) {
+.gallery .row { margin: 0; }
+.gallery .caption { display: none; }
+}
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+<title>FC DEMO - CONFIGURACION Dashboard </title>
+</head>
+
+<body class="ng-scope">
+	<header>
+		<div class="container">
+			<h1 class="">FC APP</h1>
+		</div>
+	</header>
+
+	<div class="container gallery" id="containerGalery"></div>
+
+<br><br>
+<div style="text-align: center;">
+	<div class="row" style="width: 90%; margin: auto;" id="artistListPane">
+	</div>
+</div>
+<br><br>
+<div class="container" style="width:400px" id="buttonUpload">
+	<button type="button" class="btn btn-primary btn-lg" onclick="document.location.href='upload.html';">Cargar Empleados a tareas</button>
+</div>
+<br><br>
+
+<script>
+	//console.log(_config.cognito.userPoolId);
+	//console.log("Cookie:" + document.cookie);
+	console.log("API:" + _config.api.invokeUrl);
+	var sessionToken = "";
+	var userId = "";
+
+function ListAlbums() {
+	var manifestUrl = _config.api.invokeUrl + '?uid=' + userId;
+	$.ajaxSetup({
+  	headers : {
+    	'Authorization' : sessionToken
+  	}
+	});
+	var ArtistGetJson = $.getJSON( manifestUrl, function() {
+    console.log( "Imprimiendo lista..." );
+  })
+  .done(function( data ) {
+		$( "#artistListPane" ).html("");
+		console.log(data.Items);
+		var categoryNow = "none";
+		for( var m = 0; m < data.Items.length; m++ ) {
+			if( categoryNow.indexOf(data.Items[m].type) == -1 ) {
+				categoryNow += data.Items[m].type;
+				$( "#artistListPane" ).append("<div class=\"col-lg-2\">" +
+					"<img class=\"img-circle\" src=\"" + _config.s3.hostUrl + "/" + data.Items[m].key + "\" alt=\"Generic placeholder image\" width=\"140\" height=\"140\">" +
+					"<h3>" + data.Items[m].typename + "</h3>" +
+					"<p><a class=\"btn btn-default\" href=\"photos.html?list=" + data.Items[m].type + "\" role=\"button\">Ver fotos</a></p>" +
+					"</div>");
+			}
+		}
+  })
+	.fail(function() {
+	  $( "#artistListPane" ).html('');
+	  $( "#artistListPane" ).append("<div class=\"alert alert-danger\" role=\"alert\">Error: Para ver los álbumes debe iniciar sesión</div><p><a class=\"btn btn-success btn-lg\" href=\"login.html\" role=\"button\">Login</a></p>");
+	});
+}
+if( document.cookie.indexOf('wasession') != -1 ) {
+	//alert(document.cookie.indexOf('wasession'));
+	if( document.cookie.indexOf('wasession') == 0 ) {
+		sessionToken = document.cookie.substr(document.cookie.indexOf('wasession')+10,document.cookie.indexOf('userid=')-12);
+		userId = document.cookie.substr(document.cookie.indexOf('userid=')+7,document.cookie.length);
+	}
+	else {
+		userId = document.cookie.substr(document.cookie.indexOf('userid=')+7,document.cookie.indexOf('wasession')-9);
+		sessionToken = document.cookie.substr(document.cookie.indexOf('wasession=')+10,document.cookie.length);
+	}
+	console.log("Token:" + sessionToken);
+	console.log("User Id:" + userId);
+}
+if(  _config.api.invokeUrl == '' ) {
+	$( "#artistListPane" ).html('');
+	if( sessionToken != '' ) {
+		$( "#artistListPane" ).append("<div class=\"alert alert-success\" role=\"alert\">Token: " + sessionToken + "</div>");
+	}
+	else {
+		$( "#artistListPane" ).append("<div class=\"alert alert-success\" role=\"alert\">El sitio estático se creó exitósamente, ahora es necesario crear la autenticación con Cognito User Pools</div>");
+	}
+	$( "#buttonUpload" ).hide();
+	console.log("No se encontró el API endpoint en el archivo config.js:");
+}
+else {
+	if( sessionToken != '' ) {
+		ListAlbums();
+		//alert(sessionToken+'---');
+		//alert(userId+'---');
+		//alert(document.cookie);
+	}
+	else {
+		document.location.href = "login.html";
+		//alert(sessionToken+'---');
+		//alert(userId+'---');
+		//alert(sessionToken+'---'+userId);
+		//alert(document.cookie);
+	}
+
+}
+</script>
+</body>
+
+</html>

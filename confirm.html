@@ -1,0 +1,100 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="js/aws-cognito-sdk.min.js"></script>
+<script src="js/amazon-cognito-identity.min.js"></script>
+<script src="js/config.js"></script>
+    <!-- optional: only if you use other AWS services -->
+<script src="js/aws-sdk.min.js"></script>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+<style type="text/css">
+body {
+background: url("img/back3.jpg") no-repeat top center fixed;
+-webkit-background-size: 100% auto;
+-moz-background-size: 100% auto;
+-o-background-size: 100% auto;
+ background-size: 100% auto;
+}
+</style>
+<title>Sa'am Wanderlust - Confirmacion</title>
+</head>
+
+<body class="ng-scope">
+
+<div class="container" style="width:400px">
+	<h2 align="center">Confirmación</h2>
+	<div class="form-group">
+		<label>Código de confirmación:</label>
+		<input type="text" class="form-control" size="25" id="confirmationCode" />
+	</div>
+	<button type="button" class="btn btn-primary btn-lg" onclick="ConfirmUser()">Confirmar</button>
+</div>
+<br><br>
+
+<div style="text-align: center;">
+	<div class="row" style="width: 90%; margin: auto;" id="artistListPane">
+	</div>
+</div>
+
+<script>
+	console.log(_config.cognito.userPoolId);
+	console.log("Cookie:" + document.cookie);
+	var userNameParam = document.location.href.substr(document.location.href.indexOf("?u=") + 3, document.location.href.length);
+	console.log(userNameParam);
+
+	AWSCognito.config.region = _config.cognito.region;
+
+	var poolData = {
+	    UserPoolId : _config.cognito.userPoolId, // your user pool id here
+	    ClientId : _config.cognito.userPoolClientId // your app client id here
+	};
+	var userPool =
+	new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
+	var userData = {
+	    Username : userNameParam, // your username here
+	    Pool : userPool
+	};
+	var cognitoUser;
+
+	function ConfirmCognitoUser() {
+		var code = $("#confirmationCode").val();
+		var cognitoUser =
+		new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+		//var promptCode = prompt('Escriba el código ' ,'');
+		console.log(code);
+		cognitoUser.confirmRegistration(code, true, function(err, result) {
+			if (err) {
+				$( "#artistListPane" ).html('');
+				$( "#artistListPane" ).append("<div class=\"alert alert-danger\" role=\"alert\">" + err + "</div>");
+				return;
+			}
+			else {
+				console.log('call result: ' + result);
+				document.location.href = "login.html";
+			}
+		});
+	}
+
+	function ConfirmUser() {
+		if( $( "#confirmationCode" ).val() == '' || $( "#confirmationCode" ).val() == 'undefined' ) {
+			$( "#artistListPane" ).html('');
+			$( "#artistListPane" ).append("<div class=\"alert alert-danger\" role=\"alert\">Escriba el código</div>");
+		}
+		else {
+			$( "#artistListPane" ).html('');
+			ConfirmCognitoUser();
+		}
+	}
+
+
+
+var validToken = "";
+
+var authResult = null;
+
+</script>
+</body>
+
+</html>
